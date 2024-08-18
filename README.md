@@ -2,8 +2,11 @@ Just messing around learning C.
 
 --
 
-# running
-`gcc tinyshell.c -o tinyshell && ./tinyshell ls`
+# building and running
+`gcc tinyshell.c -o tinyshell && ./tinyshell`
+
+# tinyshell
+`tinyshell> ls`
 
 ## output:
 ```
