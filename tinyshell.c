@@ -48,7 +48,6 @@ int main(){
       strtok(input, " ");
 
       while(token != NULL){
-          printf("%s\n", token);
           tokens[a] = token;
           a++;
           token = strtok(NULL, " ");
@@ -150,6 +149,31 @@ void ProcessCommand(char* input, char *tokens[]) {
     if(strcmp(input, "cd") == 0)
       printf("%s\n", "cd command requested");
     if(strcmp(input, "cat") == 0){
-      printf("%s\n", "cat command requested");
+      char* file_path;
+      struct stat fileStat;
+      long file_size;
+      char file_buffer[256];
+
+      stat(file_path, &fileStat);
+
+      file_size = fileStat.st_size;
+      file_path = GetPath(tokens);
+
+      FILE *file = fopen(file_path, "r");
+      const char *extension = strrchr(file_path, '.');
+
+      if(file == NULL){
+        printf("Error trying to open file '%s'. Please check if the file exists.\n", file_path);
+      } else if (!extension || extension == file_path) {
+        printf("Destination path isn't a file or doesn't exist. Please try again.\n");
+      } else {
+          while(fgets(file_buffer, sizeof(file_buffer), file) != NULL){
+              printf("%s", file_buffer);
+          }
+
+          fclose(file);
+
+      }
+
   }
 }
